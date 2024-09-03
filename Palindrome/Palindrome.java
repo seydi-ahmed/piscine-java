@@ -13,11 +13,11 @@ public class Palindrome {
     }
 
     public static void main(String[] args) {
-        System.out.println(Palindrome.isPalindrome("ressasser")); // true
-        System.out.println(Palindrome.isPalindrome("Bonjour"));  // false
-        System.out.println(Palindrome.isPalindrome("kay ak"));   // false
-        System.out.println(Palindrome.isPalindrome("kayak"));   // true
-        System.out.println(Palindrome.isPalindrome("kayaK"));   // true
-        System.out.println(Palindrome.isPalindrome(""));   // false
+        System.out.println(Palindrome.isPalindrome("ressasser"));
+        System.out.println(Palindrome.isPalindrome("Bonjour"));
+        System.out.println(Palindrome.isPalindrome("kay ak"));
+        System.out.println(Palindrome.isPalindrome("kayak"));
+        System.out.println(Palindrome.isPalindrome("kayaK"));
+        System.out.println(Palindrome.isPalindrome(""));
     }
 }
