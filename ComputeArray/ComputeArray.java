@@ -1,6 +1,16 @@
 public class ComputeArray {
     public static int[] computeArray(int[] array) {
-        // Créer un tableau de la même taille que l'entrée pour stocker les résultats
+
+                // Vérifier si le tableau est null
+                if (array == null) {
+                    throw new IllegalArgumentException("Le tableau ne peut pas être null");
+                }
+                
+                // Vérifier si le tableau est vide
+                if (array.length == 0) {
+                    return new int[0]; // Retourner un tableau vide
+                }
+
         int[] result = new int[array.length];
 
         // Parcourir chaque élément du tableau d'entrée
@@ -21,11 +31,11 @@ public class ComputeArray {
         return result;
     }
 
-    public static void main(String[] args) {
-        // Test de la fonction computeArray
-        int[] array = ComputeArray.computeArray(new int[]{9, 13, 8, 23, 1, 0, 89});
-        for (int i : array) {
-            System.out.print(i + " ");
-        }
-    }
+    // public static void main(String[] args) {
+    //     // Test de la fonction computeArray
+    //     int[] array = ComputeArray.computeArray(new int[]{9, 13, 8, 23, 1, 0, 89});
+    //     for (int i : array) {
+    //         System.out.println(i + " ");
+    //     }
+    // }
 }
