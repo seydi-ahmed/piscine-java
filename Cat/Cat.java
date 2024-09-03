@@ -6,7 +6,7 @@ public class Cat {
     public static void cat(String[] args) throws IOException {
         // Vérifier que le tableau d'arguments contient exactement un fichier
         if (args.length != 1) {
-            System.err.println("Usage: java Cat <filename>");
+            // System.err.println("Usage: java Cat <filename>");
             return;
         }
 
