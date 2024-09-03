@@ -1,7 +1,7 @@
 public class DoOp {
     public static String operate(String[] args) {
         if (args == null || args.length != 3) {
-            return "Error"; // Nombre incorrect d'arguments
+            return "Error";
         }
 
         try {
@@ -35,8 +35,4 @@ public class DoOp {
             return "Error"; // Erreur de format des nombres
         }
     }
-
-    // public static void main(String[] args) {
-    //     operate(args)
-    // }
 }
