@@ -2,7 +2,7 @@ public class SortArgs {
     public static void sort(String[] args) {
         
         if (args == null || args.length == 0){
-            System.out.println("\n");
+            // System.out.println("\n");
             return;
         }
 
