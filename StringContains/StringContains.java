@@ -3,7 +3,7 @@ public class StringContains {
         if (subString == null || s == null) {
             return false;
         }
-        if s.contains(subString){
+        if (s.contains(subString)){
             return true;
         }
         return false;
