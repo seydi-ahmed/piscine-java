@@ -66,10 +66,12 @@ public class Capitalize {
         // Supprimer les espaces finaux en trop
         return result.toString().trim();
     }
-
-
-    public static void main(String[] args) throws IOException {
-        String[] tab = {"abc.txt", "def.txt"};
-        capitalize(tab);
-    }
+    
+        public static void main(String[] args) throws IOException {
+            String[] tab = {"abc.txt", "def.txt"};
+            capitalize(tab);
+        }
 }
+
+
+
