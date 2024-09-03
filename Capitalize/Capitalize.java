@@ -7,13 +7,11 @@ import java.io.IOException;
 
 public class Capitalize {
     public static void capitalize(String[] args) throws IOException {
-        // Vérifier que le tableau d'arguments contient exactement deux fichiers
         if (args.length != 2) {
             System.err.println("Usage: java Capitalize <input_file> <output_file>");
             return;
         }
 
-        // Récupérer les noms des fichiers d'entrée et de sortie
         String inputFilename = args[0];
         String outputFilename = args[1];
 
@@ -22,7 +20,7 @@ public class Capitalize {
         try (BufferedReader reader = new BufferedReader(new FileReader(inputFilename))) {
             String line;
             while ((line = reader.readLine()) != null) {
-                content.append(line).append(System.lineSeparator());
+                content.append(line).append(" ");  // Ajouter un espace entre les lignes
             }
         } catch (FileNotFoundException e) {
             System.err.println("File not found: " + inputFilename);
@@ -32,8 +30,8 @@ public class Capitalize {
             return;
         }
 
-        // Capitaliser chaque mot dans le contenu
-        String capitalizedContent = capitalizeWords(content.toString());
+        // Capitaliser chaque mot dans le contenu et supprimer les espaces inutiles
+        String capitalizedContent = capitalizeWords(content.toString().trim());
 
         // Écrire le contenu capitalisé dans le fichier de sortie
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(outputFilename))) {
@@ -50,8 +48,11 @@ public class Capitalize {
 
         for (char c : text.toCharArray()) {
             if (Character.isWhitespace(c)) {
+                // Ajouter un seul espace entre les mots
+                if (result.length() > 0 && !Character.isWhitespace(result.charAt(result.length() - 1))) {
+                    result.append(' ');
+                }
                 capitalizeNext = true;
-                result.append(c);
             } else {
                 if (capitalizeNext) {
                     result.append(Character.toUpperCase(c));
@@ -62,6 +63,13 @@ public class Capitalize {
             }
         }
 
-        return result.toString();
+        // Supprimer les espaces finaux en trop
+        return result.toString().trim();
+    }
+
+
+    public static void main(String[] args) throws IOException {
+        String[] tab = {"abc.txt", "def.txt"};
+        capitalize(tab);
     }
 }
