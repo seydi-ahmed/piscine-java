@@ -29,7 +29,7 @@ public class Capitalize {
             return;
         }
 
-        // Traiter le contenu pour capitaliser les mots en ignorant les caractères non alphabétiques
+        // Traiter le contenu pour capitaliser les mots composés et gérer les espaces multiples
         String capitalizedContent = capitalizeWords(content.toString());
 
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(outputFilename))) {
@@ -56,18 +56,23 @@ public class Capitalize {
                 capitalizeNext = false;
                 previousWasSpace = false;
             } else if (Character.isWhitespace(c)) {
-                if (!previousWasSpace) {  // Ajoute un seul espace lorsqu'il y a plusieurs espaces consécutifs
+                if (!previousWasSpace) {  // Ajoute un seul espace pour plusieurs espaces consécutifs
                     result.append(' ');
                     previousWasSpace = true;
                 }
                 capitalizeNext = true;
+            } else if (c == '-' || c == '\'') {
+                // Gérer les mots composés (ex: libre-arbitre ou l'école)
+                result.append(c);
+                capitalizeNext = true;
+                previousWasSpace = false;
             } else {
                 result.append(c);
                 previousWasSpace = false;
             }
         }
 
-        // Retirer les espaces en trop à la fin de la chaîne
+        // Retirer les espaces inutiles à la fin de la chaîne
         return result.toString().trim();
     }
     public static void main(String[] args) throws IOException {
