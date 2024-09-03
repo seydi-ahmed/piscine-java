@@ -2,7 +2,7 @@ public class ComputeArray {
     public static int[] computeArray(int[] array) {
         
         if (array == null) {
-            throw new IllegalArgumentException("Le tableau ne peut pas être null");
+            return null;
         }
         
         if (array.length == 0) {
@@ -12,15 +12,22 @@ public class ComputeArray {
         int[] result = new int[array.length];
         
         for (int i = 0; i < array.length; i++) {
+
             int value = array[i];
-            if (value % 3 == 0) {
-                result[i] = value * 5;
-            } else if (value % 3 == 1) {
-                result[i] = value + 7;
-            } else if (value % 3 == 2) {
-                result[i] = value;
-            } else {
-                result[i] = value;
+            
+            switch (value % 3) {
+                case 0:
+                    result[i] = value * 5;
+                    break;
+                case 1:
+                    result[i] = value + 7;
+                    break;
+                case 2:
+                    result[i] = value;
+                    break;
+                default:
+                    result[i] = value;
+                    break;
             }
         }
 
