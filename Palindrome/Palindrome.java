@@ -1,5 +1,9 @@
 public class Palindrome {
     public static boolean isPalindrome(String s) {
+        if (s == null) {
+            return false;
+        }
+        s = s.toLowerCase();
         for (int i = 0, j = s.length() - 1; i < j; i++, j--) {
             if (s.charAt(i) != s.charAt(j)) {
                 return false;
@@ -12,5 +16,8 @@ public class Palindrome {
         System.out.println(Palindrome.isPalindrome("ressasser")); // true
         System.out.println(Palindrome.isPalindrome("Bonjour"));  // false
         System.out.println(Palindrome.isPalindrome("kay ak"));   // false
+        System.out.println(Palindrome.isPalindrome("kayak"));   // true
+        System.out.println(Palindrome.isPalindrome("kayaK"));   // true
+        System.out.println(Palindrome.isPalindrome(""));   // false
     }
 }
