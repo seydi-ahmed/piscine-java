@@ -73,6 +73,7 @@ public class Capitalize {
         }
 
         // Retirer les espaces inutiles à la fin de la chaîne
+        System.out.println(text);
         System.out.println(result);
         return result.toString().trim();
     }
