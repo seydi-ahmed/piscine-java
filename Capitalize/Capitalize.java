@@ -61,12 +61,12 @@ public class Capitalize {
                     previousWasSpace = true;
                 }
                 capitalizeNext = true;
-            } else if (c == '-' || c == '\'') {
+            } /*else if (c == '-' || c == '\'') {
                 // Gérer les mots composés (ex: libre-arbitre ou l'école)
                 result.append(c);
                 capitalizeNext = true;
                 previousWasSpace = false;
-            } else {
+            }*/ else {
                 result.append(c);
                 previousWasSpace = false;
             }
