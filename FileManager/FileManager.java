@@ -24,7 +24,7 @@ public class FileManager {
         try (BufferedReader reader = new BufferedReader(new FileReader(fileName))) {
             String line;
             while ((line = reader.readLine()) != null) {
-                content.append(line).append("\n");
+                content.append(line).append(System.lineSeparator());  // Utiliser System.lineSeparator() pour la compatibilité des sauts de ligne
             }
         } catch (FileNotFoundException e) {
             System.err.println("Fichier non trouvé: " + fileName);
@@ -34,7 +34,7 @@ public class FileManager {
             throw e;
         }
 
-        return content.toString().trim();  // Retirer le dernier saut de ligne
+        return content.toString().trim();  // Retirer les espaces et sauts de ligne superflus
     }
 
     // Fonction pour supprimer un fichier
@@ -50,4 +50,11 @@ public class FileManager {
             System.err.println("Fichier non trouvé: " + fileName);
         }
     }
+
+    public static void main(String[] args) throws IOException {
+        FileManager.createFile("file.txt", "Lorem ipsum");
+        System.out.println(FileManager.getContentFile("file.txt"));
+        FileManager.deleteFile("file.txt");
+    }
+
 }
