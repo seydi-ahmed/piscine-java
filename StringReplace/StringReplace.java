@@ -3,6 +3,6 @@ public class StringReplace {
         if (s == null || target == null || replacement == null) {
             return s;
         }
-        return s.replaceAll(target, replacement);
+        return s.replace(target, replacement);
     }
 }
