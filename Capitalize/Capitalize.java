@@ -29,7 +29,7 @@ public class Capitalize {
             return;
         }
 
-        // Traiter le contenu pour capitaliser les mots composés et gérer les espaces multiples
+        // Traiter le contenu pour capitaliser uniquement le premier caractère des mots, sans affecter les caractères spéciaux
         String capitalizedContent = capitalizeWords(content.toString());
 
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(outputFilename))) {
@@ -50,37 +50,32 @@ public class Capitalize {
             if (Character.isLetter(c)) {
                 if (capitalizeNext) {
                     result.append(Character.toUpperCase(c));
+                    capitalizeNext = false;  // Ne capitalise que le premier caractère du mot
                 } else {
                     result.append(Character.toLowerCase(c));
                 }
-                capitalizeNext = false;
                 previousWasSpace = false;
             } else if (Character.isWhitespace(c)) {
                 if (!previousWasSpace) {  // Ajoute un seul espace pour plusieurs espaces consécutifs
                     result.append(' ');
                     previousWasSpace = true;
                 }
-                capitalizeNext = true;
-            } /*else if (c == '-' || c == '\'') {
-                // Gérer les mots composés (ex: libre-arbitre ou l'école)
-                result.append(c);
-                capitalizeNext = true;
+                capitalizeNext = true;  // Marque pour capitaliser le prochain mot
+            } else {
+                result.append(c);  // Caractères spéciaux sont laissés intacts
                 previousWasSpace = false;
-            }*/ else {
-                result.append(c);
-                previousWasSpace = false;
+                capitalizeNext = false;  // Ne pas capitaliser après un caractère spécial
             }
         }
 
         // Retirer les espaces inutiles à la fin de la chaîne
-        System.out.println(text);
-        System.out.println(result);
         return result.toString().trim();
     }
-
     public static void main(String[] args) throws IOException {
         String[] tab = {"abc.txt", "def.txt"};
         capitalize(tab);
     }
-}
+
+}    
+
 
