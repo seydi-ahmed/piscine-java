@@ -8,7 +8,6 @@ import java.io.IOException;
 public class Capitalize {
     public static void capitalize(String[] args) throws IOException {
         if (args.length != 2) {
-            System.err.println("Usage: java Capitalize <input_file> <output_file>");
             return;
         }
 
