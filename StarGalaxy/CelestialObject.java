@@ -69,10 +69,7 @@ public class CelestialObject {
         
         CelestialObject that = (CelestialObject) obj;
 
-        return Double.compare(that.x, x) == 0 &&
-        Double.compare(that.y, y) == 0 &&
-        Double.compare(that.z, z) == 0 &&
-        Objects.equals(name, that.name);
+        return Double.compare(that.x, x) == 0 && Double.compare(that.y, y) == 0 && Double.compare(that.z, z) == 0 && Objects.equals(name, that.name);
     }
 
     // Overriding hashCode method
@@ -81,18 +78,4 @@ public class CelestialObject {
         return Objects.hash(x, y, z, name);
     }
     //******************************AJOUT*********************************/
-
-        public static void main(String[] args) {
-        CelestialObject celestialObject = new CelestialObject();
-        CelestialObject earth = new CelestialObject("Terre", 1.0, 2.0, 2.0);
-        CelestialObject earth1 = new CelestialObject("Terre", 1.0, 2.0, 2.0);
-
-        System.out.println(earth.toString());
-        System.out.println(earth.equals(earth1));
-        System.out.println(earth.equals(celestialObject));
-
-        System.out.println(earth.hashCode());
-        System.out.println(celestialObject.hashCode());
-    }
-
 }
