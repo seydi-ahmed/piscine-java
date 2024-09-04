@@ -71,7 +71,7 @@ public class CelestialObject {
         return distanceInAU * KM_IN_ONE_AU;
     }
 
-        public static void main(String[] args) {
+    public static void main(String[] args) {
         CelestialObject defaultStar = new CelestialObject();
         CelestialObject earth = new CelestialObject("Terre", 1.0, 2.0, 2.0);
 
