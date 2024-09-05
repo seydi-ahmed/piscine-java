@@ -1,43 +1,33 @@
-import java.text.DecimalFormat;
+import java.lang.Math;
 
 public class AreaCalculator {
-    
-    // Calcul de l'aire d'un cercle
-    private static final DecimalFormat df = new DecimalFormat("0.00");
-
-    // Calcul de l'aire d'un cercle
     public double calculate(double radius) {
-        double area = Math.PI * radius * radius;
-        return Double.parseDouble(df.format(area));
+        double area = Math.PI*radius*radius;
+        return Math.round(area*100.0)/100.0;
     }
 
-    // Calcul de l'aire d'un rectangle
     public double calculate(double width, double height) {
-        double area = width * height;
-        return Double.parseDouble(df.format(area));
+        double area = width*height;
+        return Math.round(area*100.0)/100.0;
     }
 
-    // Calcul de l'aire d'un triangle
     public double calculate(double base, double height, boolean isTriangle) {
         if (isTriangle) {
-            double area = 0.5 * base * height;
-            return Double.parseDouble(df.format(area));
+            double area = (base * height) / 2;
+            return Math.round(area*100.0)/100.0;
         }
-        // Si le booléen isTriangle est faux, il est en fait destiné à signaler une erreur.
-        // Mais pour la signature, on suppose que si ce n'est pas un triangle, il ne doit pas être appelé ici.
         return -1;
     }
 
-    // Calcul de l'aire d'un carré
     public double calculate(double side, boolean isSquare) {
         if (isSquare) {
-            double area = side * side;
-            return Double.parseDouble(df.format(area));
+            double area = side*side;
+            return (area*100.0)/100.0;
         }
-        // Si le booléen isSquare est faux, il est en fait destiné à signaler une erreur.
-        // Mais pour la signature, on suppose que si ce n'est pas un carré, il ne doit pas être appelé ici.
         return -1;
     }
+
+    // ***************************** MAIN *****************************
 
     public static void main(String[] args) {
         AreaCalculator calculator = new AreaCalculator();
