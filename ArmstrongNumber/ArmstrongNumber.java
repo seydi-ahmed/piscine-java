@@ -1,17 +1,14 @@
 public class ArmstrongNumber {
     public boolean isArmstrong(int number) {
-        // Convert the number to string to get each digit
         String numStr = Integer.toString(number);
-        int numDigits = numStr.length(); // Number of digits in the number
+        int numDigits = numStr.length();
         int sum = 0;
 
-        // Calculate the sum of each digit raised to the power of numDigits
         for (char c : numStr.toCharArray()) {
-            int digit = Character.getNumericValue(c); // Convert character to integer
+            int digit = Character.getNumericValue(c);
             sum += Math.pow(digit, numDigits);
         }
 
-        // Check if the sum equals the original number
         return sum == number;
     }
 
@@ -31,3 +28,5 @@ public class ArmstrongNumber {
         System.out.println("Is " + number3 + " an Armstrong number? " + armstrongNumber.isArmstrong(number3)); // Expected output: true
     }
 }
+
+
