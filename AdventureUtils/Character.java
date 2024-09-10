@@ -54,24 +54,19 @@ public class Character {
     }
 
     // Méthode statique pour afficher le statut de tous les personnages
-public static String printStatus() {
-    StringBuilder sb = new StringBuilder();
-
-    if (allCharacters.isEmpty()) {
-        sb.append("------------------------------------------\n");
-        sb.append("Nobody's fighting right now !\n");
-        sb.append("------------------------------------------");
-    } else {
-        sb.append("------------------------------------------\n");
-        sb.append("Characters currently fighting : \n");
-        for (Character character : allCharacters) {
-            sb.append(" - ").append(character.toString()).append("\n");
+    public static String printStatus() {
+        String result = "------------------------------------------\n";
+        if (allCharacters.isEmpty()) {
+            result += "Nobody's fighting right now !\n";
+        } else {
+            result += "Characters currently fighting :\n";
+            for (Character warrior : allCharacters) {
+                result += " - " + warrior.toString() + "\n";
+            }
         }
-        sb.append("------------------------------------------");
+        result += "------------------------------------------\n";
+        return result;
     }
-
-    return sb.toString();
-}
 
 
 
