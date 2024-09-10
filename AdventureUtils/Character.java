@@ -56,7 +56,7 @@ public class Character {
     // Méthode statique pour afficher le statut de tous les personnages
     public static String printStatus() {
         if (allCharacters.isEmpty()) {
-            return "------------------------------------------\nNobody's fighting right now !\n------------------------------------------\n";
+            return "------------------------------------------\nNobody's fighting right now !\n------------------------------------------";
         }
 
         StringBuilder sb = new StringBuilder();
