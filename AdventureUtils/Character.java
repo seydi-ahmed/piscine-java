@@ -69,6 +69,7 @@ public class Character {
         return sb.toString();
     }
 
+
     // Méthode statique pour gérer un combat entre deux personnages
     public static Character fight(Character c1, Character c2) {
         while (c1.getCurrentHealth() > 0 && c2.getCurrentHealth() > 0) {
@@ -79,4 +80,20 @@ public class Character {
         }
         return c1.getCurrentHealth() > 0 ? c1 : c2;  // Retourne le vainqueur
     }
+
+
+    public static void main(String[] args) {
+        System.out.println(Character.printStatus());
+
+        Character aragorn = new Character("Aragorn", 20);
+        Character uruk = new Character("Uruk", 15);
+
+        System.out.println(Character.printStatus());
+
+        Character winner = Character.fight(aragorn, uruk);
+
+        System.out.println(winner.toString());
+        System.out.println(Character.printStatus());
+    }
+
 }
