@@ -3,20 +3,22 @@ public class Templar extends Character implements Healer, Tank {
     private final int healCapacity;
     private final int shield;
 
-    // Constructeur avec les 4 paramètres : name, maxHealth, healCapacity et shield
     public Templar(String name, int maxHealth, int healCapacity, int shield) {
         super(name, maxHealth);
         this.healCapacity = healCapacity;
         this.shield = shield;
     }
 
-    // Implémentation de la méthode getHealCapacity de l'interface Healer
     @Override
     public int getHealCapacity() {
         return this.healCapacity;
     }
 
-    // Implémentation de la méthode heal de l'interface Healer
+    @Override
+    public int getShield() {
+        return this.shield;
+    }
+
     @Override
     public void heal(Character character) {
         if (character.getCurrentHealth() + this.healCapacity > character.getMaxHealth()) {
@@ -26,20 +28,25 @@ public class Templar extends Character implements Healer, Tank {
         }
     }
 
-    // Implémentation de la méthode getShield de l'interface Tank
     @Override
-    public int getShield() {
-        return this.shield;
+    public void takeDamage(int damage) {
+        int effectiveDamage = Math.max(damage - this.shield, 0);
+        setCurrentHealth(getCurrentHealth() - effectiveDamage);
     }
 
-    // Redéfinition de la méthode toString
+    @Override
+    public void attack(Character opponent) {
+        heal(this); // Heal itself
+        opponent.takeDamage(6);
+    }
+
     @Override
     public String toString() {
-        if (this.getCurrentHealth() == 0) {
-            return this.getName() + " has been beaten, even with its " + this.shield 
+        if (getCurrentHealth() == 0) {
+            return getName() + " has been beaten, even with its " + this.shield 
                 + " shield. So bad, it could heal " + this.healCapacity + " HP.";
         } else {
-            return this.getName() + " is a strong Templar with " + this.getCurrentHealth() 
+            return getName() + " is a strong Templar with " + getCurrentHealth() 
                 + " HP. It can heal " + this.healCapacity + " HP and has a shield of " + this.shield + ".";
         }
     }

@@ -1,26 +1,43 @@
-public class Sorcerer extends Character
-    implements Healer {
+// Sorcerer.java
+public class Sorcerer extends Character implements Healer {
     private final int healCapacity;
+
     public Sorcerer(String name, int maxHealth, int healCapacity) {
         super(name, maxHealth);
         this.healCapacity = healCapacity;
     }
+
+    @Override
     public int getHealCapacity() {
         return this.healCapacity;
     }
-    public void heal(Character warrior) {
-        if ((this.healCapacity + warrior.getCurrentHealth()) >= warrior.getMaxHealth()) {
-            warrior.setCurrentHealth(warrior.getMaxHealth());
+
+    @Override
+    public void heal(Character character) {
+        if (character.getCurrentHealth() + this.healCapacity > character.getMaxHealth()) {
+            character.setCurrentHealth(character.getMaxHealth());
         } else {
-            warrior.setCurrentHealth(warrior.getCurrentHealth() + this.healCapacity);
-        } 
+            character.setCurrentHealth(character.getCurrentHealth() + this.healCapacity);
+        }
     }
+
+    @Override
+    public void takeDamage(int damage) {
+        setCurrentHealth(getCurrentHealth() - damage);
+    }
+
+    @Override
+    public void attack(Character opponent) {
+        heal(this); // Heal itself
+        opponent.takeDamage(10);
+    }
+
     @Override
     public String toString() {
-        if (this.getCurrentHealth() == 0) {
-            return this.getName() + " is a dead sorcerer. So bad, it could heal " + this.healCapacity + " HP.";
+        if (getCurrentHealth() == 0) {
+            return getName() + " is a dead sorcerer. So bad, it could heal " + this.healCapacity + " HP.";
         } else {
-            return this.getName() + " is a sorcerer with " + this.getCurrentHealth() + " HP. It can heal " + this.healCapacity + " HP.";
+            return getName() + " is a sorcerer with " + getCurrentHealth() + " HP. It can heal " + this.healCapacity + " HP.";
         }
     }
 }

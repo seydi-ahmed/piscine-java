@@ -1,59 +1,55 @@
+// Character.java
 import java.util.ArrayList;
 import java.util.List;
 
-public class Character {
-    // Propriétés privées avec les modificateurs d'accès appropriés
+public abstract class Character {
     private final int maxHealth;
     private int currentHealth;
     private final String name;
-
-    // Liste statique pour garder une trace de tous les personnages créés
     private static List<Character> allCharacters = new ArrayList<>();
 
-    // Constructeur avec deux paramètres
     public Character(String name, int maxHealth) {
         this.name = name;
         this.maxHealth = maxHealth;
         this.currentHealth = maxHealth;
-        allCharacters.add(this);  // Ajouter le personnage à la liste statique
+        allCharacters.add(this);
     }
 
-    // Getters pour les propriétés
     public int getMaxHealth() {
-        return maxHealth;
+        return this.maxHealth;
     }
 
     public int getCurrentHealth() {
-        return currentHealth;
+        return this.currentHealth;
     }
 
     public String getName() {
-        return name;
+        return this.name;
     }
 
-    // Méthode toString pour afficher le personnage avec le format demandé
+    public abstract void takeDamage(int damage);
+
+    public abstract void attack(Character opponent);
+
+    protected void setCurrentHealth(int newValue) {
+        if (newValue < 0) {
+            this.currentHealth = 0;
+        } else if (newValue > this.maxHealth) {
+            this.currentHealth = this.maxHealth;
+        } else {
+            this.currentHealth = newValue;
+        }
+    }
+
     @Override
     public String toString() {
-        if (currentHealth == 0) {
-            return name + " : KO";  // Si currentHealth est 0, retourne KO
-        }
-        return name + " : " + currentHealth + "/" + maxHealth;
-    }
-
-    // Méthode takeDamage qui réduit la santé courante
-    public void takeDamage(int damage) {
-        currentHealth -= damage;
-        if (currentHealth < 0) {
-            currentHealth = 0;  // currentHealth ne peut pas être en dessous de 0
+        if (this.currentHealth > 0) {
+            return getName() + " : " + getCurrentHealth() + "/" + getMaxHealth();
+        } else {
+            return getName() + " : KO";
         }
     }
 
-    // Méthode attack qui inflige 9 points de dégâts à un autre personnage
-    public void attack(Character target) {
-        target.takeDamage(9);  // L'autre personnage reçoit 9 points de dégâts
-    }
-
-    // Méthode statique pour afficher le statut de tous les personnages
     public static String printStatus() {
         String result = "------------------------------------------\n";
         if (allCharacters.isEmpty()) {
@@ -68,32 +64,18 @@ public class Character {
         return result;
     }
 
-
-
-    // Méthode statique pour gérer un combat entre deux personnages
-    public static Character fight(Character c1, Character c2) {
-        while (c1.getCurrentHealth() > 0 && c2.getCurrentHealth() > 0) {
-            c1.attack(c2);  // c1 attaque c2
-            if (c2.getCurrentHealth() > 0) {
-                c2.attack(c1);  // c2 attaque c1 si c2 n'est pas KO
+    public static Character fight(Character warrior1, Character warrior2) {
+        while (warrior1.getCurrentHealth() > 0 && warrior2.getCurrentHealth() > 0) {
+            warrior1.attack(warrior2);
+            if (warrior2.getCurrentHealth() == 0) {
+                break;
             }
+            warrior2.attack(warrior1);
         }
-        return c1.getCurrentHealth() > 0 ? c1 : c2;  // Retourne le vainqueur
+        if (warrior1.getCurrentHealth() == 0) {
+            return warrior2;
+        } else {
+            return warrior1;
+        }
     }
-
-
-    public static void main(String[] args) {
-        System.out.println(Character.printStatus());
-
-        Character aragorn = new Character("Aragorn", 20);
-        Character uruk = new Character("Uruk", 15);
-
-        System.out.println(Character.printStatus());
-
-        Character winner = Character.fight(aragorn, uruk);
-
-        System.out.println(winner.toString());
-        System.out.println(Character.printStatus());
-    }
-
 }
