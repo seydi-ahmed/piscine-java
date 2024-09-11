@@ -2,5 +2,5 @@ git config --global user.email "seydiahmedelcheikh@gmail.com"
 git config --global user.name "mouhameddiouf"
 git config credential.helper store
 git add .
-git commit -m "java structures"
+git commit -m "set operations"
 git push
