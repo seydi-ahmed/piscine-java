@@ -1,15 +1,15 @@
 import java.io.IOException;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.regex.Matcher;
 
 public class RegexReplace {
-
-    // Fonction pour supprimer les unités 'cm' et '€' lorsqu'elles suivent un nombre sans espace
+    
+    // Fonction pour supprimer les unités 'cm' et '€' lorsqu'elles suivent un nombre
     public static String removeUnits(String s) {
-        // Remplace "cm" ou "€" s'ils sont collés à un nombre mais pas suivis par un autre caractère non numérique
-        return s.replaceAll("(\\d+)(cm|€)(?!\\d)", "$1");
+        // Remplace "cm" ou "€" s'ils sont suivis directement d'un nombre par rien
+        return s.replaceAll("(\\d+)(cm|€)(?![\\d])", "$1");
     }
-
+    
     // Fonction pour obscurcir une adresse e-mail selon les règles données
     public static String obfuscateEmail(String s) {
         // Regex pour séparer le nom d'utilisateur et le domaine
@@ -45,7 +45,6 @@ public class RegexReplace {
         // Concatène le nom d'utilisateur obfusqué et le domaine obfusqué
         return username + "@" + domain;
     }
-
 
     public static void main(String[] args) throws IOException {
         System.out.println(RegexReplace.removeUnits("32cm et 50€"));
