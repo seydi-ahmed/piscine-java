@@ -3,47 +3,52 @@ import java.util.regex.Pattern;
 import java.util.regex.Matcher;
 
 public class RegexReplace {
-
-    // Fonction pour supprimer les unités 'cm' et '€' lorsqu'elles suivent un nombre
+    // Function to remove units cm and € following a number and space
     public static String removeUnits(String s) {
-        // Remplace les occurrences de 'cm' et '€' lorsqu'elles suivent un nombre et sont suivies par un espace ou la fin de la chaîne
-        return s.replaceAll("(\\d+)(cm|€)(?=\\s|$)", "$1");
+        // Regular expression to match a number followed by 'cm' or '€'
+        String regex = "(\\d+)(cm|€)\\b";
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(s);
+        return matcher.replaceAll("$1");
     }
-    
-    // Fonction pour obscurcir une adresse e-mail selon les règles données
+
     public static String obfuscateEmail(String s) {
-        // Regex pour séparer le nom d'utilisateur et le domaine
+        // Split the email into username and domain
         String[] parts = s.split("@");
         if (parts.length != 2) {
-            return s; // Si l'adresse e-mail n'est pas valide, on la retourne telle quelle
+            return s; // Return unchanged if not a valid email
         }
-
+        
         String username = parts[0];
         String domain = parts[1];
-
-        // Obscurcir la partie nom d'utilisateur
-        if (username.contains("-") || username.contains(".") || username.contains("_")) {
-            username = username.replaceAll("(?<=[-._]).(?=.)", "*"); // Remplace les caractères adjacents à ces symboles par "*"
+        
+        // Obfuscate username
+        String obfuscatedUsername;
+        if (username.length() > 3) {
+            obfuscatedUsername = username.substring(0, 1) + "***" + username.substring(username.length() - 1);
         } else {
-            if (username.length() > 3) {
-                username = username.substring(0, 3) + "***"; // Remplace les 3 derniers caractères par "***"
+            obfuscatedUsername = username.replaceAll("[-._]", "*");
+        }
+        
+        // Obfuscate domain
+        String obfuscatedDomain;
+        String[] domainParts = domain.split("\\.");
+        if (domainParts.length == 3) {
+            // Format: third level domain, second level domain, top level domain
+            obfuscatedDomain = "***.***." + domainParts[2];
+        } else if (domainParts.length == 2) {
+            // Format: second level domain, top level domain
+            String topLevelDomain = domainParts[1];
+            if (topLevelDomain.equals("com") || topLevelDomain.equals("org") || topLevelDomain.equals("net")) {
+                obfuscatedDomain = "***." + topLevelDomain;
+            } else {
+                obfuscatedDomain = "***.***";
             }
-        }
-
-        // Regex pour détecter un domaine à trois niveaux
-        String domainPattern = "([^.]+)\\.([^.]+)\\.([^.]+)";
-        Matcher matcher = Pattern.compile(domainPattern).matcher(domain);
-        if (matcher.matches()) {
-            // Si on a un domaine de type "sous-domaine.domaine.tld"
-            domain = "******." + matcher.group(2) + ".***"; // Masque le sous-domaine et le TLD
         } else {
-            // Sinon, masque tout sauf si c'est .com, .org ou .net
-            domain = domain.replaceAll("([^.]+)\\.(com|org|net)", "******.$2");
-            domain = domain.replaceAll("([^.]+)\\.([^.]+)", "******.**"); // Masque le domaine et le TLD dans les autres cas
+            obfuscatedDomain = domain;
         }
-
-        // Concatène le nom d'utilisateur obfusqué et le domaine obfusqué
-        return username + "@" + domain;
+        
+        return obfuscatedUsername + "@" + obfuscatedDomain;
     }
 
 
@@ -58,3 +63,11 @@ public class RegexReplace {
     }
 
 }
+
+
+// 32 et 50
+// 32 cm et 50 €
+// 32cms et 50€!
+// john.***@*******.com
+// jan*@*******.co.***
+// jac***@*******.**
