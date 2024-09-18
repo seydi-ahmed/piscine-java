@@ -1,13 +1,13 @@
+import java.io.IOException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.io.IOException;
 
 public class RegexReplace {
 
     // Fonction pour supprimer les unités 'cm' et '€' lorsqu'elles suivent un nombre sans espace
     public static String removeUnits(String s) {
-        // Remplace "cm" ou "€" s'ils sont collés à un nombre
-        return s.replaceAll("(\\d+)(cm|€)", "$1");
+        // Remplace "cm" ou "€" s'ils sont collés à un nombre mais pas suivis par un autre caractère non numérique
+        return s.replaceAll("(\\d+)(cm|€)(?!\\d)", "$1");
     }
 
     // Fonction pour obscurcir une adresse e-mail selon les règles données
@@ -34,8 +34,8 @@ public class RegexReplace {
         String domainPattern = "([^.]+)\\.([^.]+)\\.([^.]+)";
         Matcher matcher = Pattern.compile(domainPattern).matcher(domain);
         if (matcher.matches()) {
-            // Si on a un domaine de type "sous-domaine.domaine.com"
-            domain = "******." + matcher.group(2) + ".***"; // Masque le sous-domaine et le domaine de premier niveau
+            // Si on a un domaine de type "sous-domaine.domaine.tld"
+            domain = "******." + matcher.group(2) + ".***"; // Masque le sous-domaine et le TLD
         } else {
             // Sinon, masque tout sauf si c'est .com, .org ou .net
             domain = domain.replaceAll("([^.]+)\\.(com|org|net)", "******.$2");
@@ -45,6 +45,7 @@ public class RegexReplace {
         // Concatène le nom d'utilisateur obfusqué et le domaine obfusqué
         return username + "@" + domain;
     }
+
 
     public static void main(String[] args) throws IOException {
         System.out.println(RegexReplace.removeUnits("32cm et 50€"));
