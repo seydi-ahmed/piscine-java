@@ -5,22 +5,24 @@ import java.time.format.DateTimeFormatter;
 import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
+;
 public class ParseDate {
-
-    // Parses the ISO 8601 format (e.g., 2022-04-25T20:51:28.709039322)
     public static LocalDateTime parseIsoFormat(String stringDate) {
-        return LocalDateTime.parse(stringDate, DateTimeFormatter.ISO_DATE_TIME);
+        if (stringDate == null) {
+            return null;
+        }
+        return LocalDateTime.parse(stringDate);
     }
-
-    // Parses a full-text formatted date (e.g., "lundi 25 avril 2022")
     public static LocalDate parseFullTextFormat(String stringDate) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("EEEE dd MMMM yyyy", Locale.FRANCE);
-        return LocalDate.parse(stringDate, formatter);
+        if (stringDate == null) {
+            return null;
+        }
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("EEEE d MMMM yyyy", Locale.FRENCH);
+        // Parse the date using the formatter
+        LocalDate date = LocalDate.parse(stringDate, formatter);
+        return date;
     }
-
-    // Parses a time string (e.g., "09 heures du soir, 07 minutes et 23 secondes")
-     public static LocalTime parseTimeFormat(String stringDate) {
+    public static LocalTime parseTimeFormat(String stringDate) {
         if (stringDate == null) {
             return null;
         }
