@@ -6,31 +6,28 @@ import java.time.Period;
 
 public class DifferenceBetweenDate {
 
-    // Calculate the duration between two LocalTime instances
     public static Duration durationBetweenTime(LocalTime localTime1, LocalTime localTime2) {
         if (localTime1 == null || localTime2 == null) {
-            return Duration.ZERO; // Handle null values appropriately
+            return null;
         }
-        Duration duration = Duration.between(localTime1, localTime2);
-        return duration.abs();
+        return Duration.between(localTime1, localTime2).abs();
     }
 
-    // Calculate the period between two LocalDate instances
     public static Period periodBetweenDate(LocalDate date1, LocalDate date2) {
         if (date1 == null || date2 == null) {
-            return Period.ZERO; // Handle null values appropriately
+            return null;
         }
-        Period period = Period.between(date1, date2);
-        return period.isNegative() ? period.negated() : period;
+        if (date1.isBefore(date2)) {
+            return Period.between(date1, date2);
+        }
+        return Period.between(date1, date2).negated();
     }
 
-    // Calculate the number of hours between two LocalDateTime instances
     public static Long numberOfHoursBetweenDateTime(LocalDateTime dateTime1, LocalDateTime dateTime2) {
         if (dateTime1 == null || dateTime2 == null) {
-            return 0L; // Handle null values appropriately
+            return null;
         }
-        Duration duration = Duration.between(dateTime1, dateTime2);
-        return Math.abs(duration.toHours());
+        return Duration.between(dateTime1, dateTime2).abs().toHours();
     }
 
     public static void main(String[] args) {
