@@ -2,50 +2,62 @@ import java.util.*;
 
 public class TopFrequents {
     public List<Integer> findTopKFrequent(int[] nums, int k) {
-        // Map to store frequency of each element
-        Map<Integer, Integer> frequencyMap = new HashMap<>();
-        // Map to store the first index of each element
-        Map<Integer, Integer> indexMap = new HashMap<>();
-        
-        // Fill frequency map and index map
-        for (int i = 0; i < nums.length; i++) {
-            int num = nums[i];
-            frequencyMap.put(num, frequencyMap.getOrDefault(num, 0) + 1);
-            // Only set the index if it's not already set
-            indexMap.putIfAbsent(num, i);
+        if (nums == null || nums.length == 0 || k <= 0) {
+            return new ArrayList<>();
         }
 
-        // PriorityQueue (min-heap) to store elements based on frequency and index
+        // Step 1: Count the frequencies of each number
+        Map<Integer, Integer> frequencyMap = new HashMap<>();
+        for (int num : nums) {
+            frequencyMap.put(num, frequencyMap.getOrDefault(num, 0) + 1);
+        }
+
+        // Step 2: Use a min-heap to keep track of top k frequent elements
         PriorityQueue<Map.Entry<Integer, Integer>> minHeap = new PriorityQueue<>(
-            (a, b) -> {
-                // Compare by frequency first
-                int frequencyComparison = Integer.compare(b.getValue(), a.getValue());
-                if (frequencyComparison != 0) {
-                    return frequencyComparison;
-                }
-                // If frequencies are the same, compare by first index of appearance
-                return Integer.compare(indexMap.get(a.getKey()), indexMap.get(b.getKey()));
-            }
+            (a, b) -> a.getValue().equals(b.getValue()) ? Integer.compare(a.getKey(), b.getKey()) 
+                                                        : Integer.compare(a.getValue(), b.getValue())
         );
 
-        // Add all elements to the heap
         for (Map.Entry<Integer, Integer> entry : frequencyMap.entrySet()) {
             minHeap.offer(entry);
-            // Keep only k most frequent elements in the heap
             if (minHeap.size() > k) {
                 minHeap.poll();
             }
         }
 
-        // Extract elements from the heap into the result list
+        // Step 3: Extract the elements from the heap
         List<Integer> topKFrequent = new ArrayList<>();
         while (!minHeap.isEmpty()) {
             topKFrequent.add(minHeap.poll().getKey());
         }
         
-        // Since heap is a min-heap, the list needs to be reversed to maintain order
+        // The result list needs to be reversed because we used a min-heap
         Collections.reverse(topKFrequent);
-        
         return topKFrequent;
+    }
+
+
+    public static void main(String[] args) {
+        TopFrequents topFrequents = new TopFrequents();
+
+        // Test case 1
+        int[] nums1 = {1, 1, 1, 2, 2, 3};
+        int k1 = 2;
+        System.out.println("Top " + k1 + " frequent elements: " + topFrequents.findTopKFrequent(nums1, k1));
+
+        // Test case 2
+        int[] nums2 = {1};
+        int k2 = 1;
+        System.out.println("Top " + k2 + " frequent elements: " + topFrequents.findTopKFrequent(nums2, k2));
+
+        // Test case 3
+        int[] nums3 = {4, 1, -1, 2, -1, 2, 3};
+        int k3 = 2;
+        System.out.println("Top " + k3 + " frequent elements: " + topFrequents.findTopKFrequent(nums3, k3));
+
+        // Test case 4
+        int[] nums4 = {4, 1, -1, 2, -1, 2, 3};
+        int k4 = 10;
+        System.out.println("Top " + k4 + " frequent elements: " + topFrequents.findTopKFrequent(nums4, k4));
     }
 }
