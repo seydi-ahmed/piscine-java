@@ -5,8 +5,7 @@ import java.util.regex.Pattern;
 
 public class BreakdownURL {
     // Regex pour extraire les composants de l'URL
-    private static final String URL_REGEX = 
-        "^(https?)://([^:/\\s]+)(:(\\d+))?(/[^?\\s]*)?(\\?(.*))?$";
+    private static final String URL_REGEX = "^(https?)://([^:/\\s]+)(:(\\d+))?(/[^?\\s]*)?(\\?(.*))?$";
     
     // Methode pour parser et valider les URLs
     public Map<String, String> parseURL(String url) {
@@ -50,3 +49,6 @@ public class BreakdownURL {
         System.out.println("Components of URL 2: " + components2);
     }
 }
+
+
+// A VOIR EN DÉTAIL
