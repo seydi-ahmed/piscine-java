@@ -5,21 +5,16 @@ import java.time.format.DateTimeParseException;
 
 public class AgeFinder {
     public int calculateAge(String date) {
-        // Définir le format de date attendu
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         
         try {
-            // Analyser la date fournie
             LocalDate birthDate = LocalDate.parse(date, formatter);
             LocalDate today = LocalDate.now();
             
-            // Calculer la période entre aujourd'hui et la date de naissance
             Period period = Period.between(birthDate, today);
             
-            // Retourner l'âge en années
             return period.getYears();
         } catch (DateTimeParseException e) {
-            // Si une erreur de parsing se produit, retourner -1
             return -1;
         }
     }
