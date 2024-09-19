@@ -1,0 +1,40 @@
+public class LongestCommonPrefix {
+    public String findLongestCommonPrefix(String[] strs) {
+        if (strs == null || strs.length == 0) {
+            return "";
+        }
+
+        // Start with the first string as the initial prefix
+        String prefix = strs[0];
+
+        // Compare the prefix with each string in the array
+        for (int i = 1; i < strs.length; i++) {
+            // Update the prefix by comparing with the current string
+            while (strs[i].indexOf(prefix) != 0) {
+                // Reduce the prefix by one character from the end
+                prefix = prefix.substring(0, prefix.length() - 1);
+                // If the prefix becomes empty, return ""
+                if (prefix.isEmpty()) {
+                    return "";
+                }
+            }
+        }
+        return prefix;
+    }
+
+    public static void main(String[] args) {
+        LongestCommonPrefix lcp = new LongestCommonPrefix();
+
+        // Test case 1
+        String[] strs1 = {"flower", "flow", "flight"};
+        System.out.println("Longest common prefix: " + lcp.findLongestCommonPrefix(strs1)); // Expected output: "fl"
+
+        // Test case 2
+        String[] strs2 = {"dog", "racecar", "car"};
+        System.out.println("Longest common prefix: " + lcp.findLongestCommonPrefix(strs2)); // Expected output: ""
+
+        // Test case 3
+        String[] strs3 = {"interspecies", "interstellar", "interstate"};
+        System.out.println("Longest common prefix: " + lcp.findLongestCommonPrefix(strs3)); // Expected output: "inters"
+    }
+}
