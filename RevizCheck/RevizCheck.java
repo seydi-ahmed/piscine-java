@@ -1,42 +1,42 @@
 import java.time.LocalDate;
 import java.time.Period;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 
 public class RevizCheck {
-    public String calculatePeriod(String startDate, String endDate) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        LocalDate dateStart = LocalDate.parse(startDate, formatter);
-        LocalDate dateEnd = LocalDate.parse(endDate, formatter);
+    public int calculateAge(String date) {
+        try {
 
-        Period period = Period.between(dateStart, dateEnd);
+            DateTimeFormatter formatter =  DateTimeFormatter.ofPattern("yyyy-MM-dd");
+            LocalDate newDate = LocalDate.parse(date, formatter);
 
-        int years = Math.abs(period.getYears());
-        int months = Math.abs(period.getMonths());
+            LocalDate jourj = LocalDate.now();
+            
+            Period diff = Period.between(newDate, jourj);
+
+            return diff.getYears();
+        } catch (DateTimeParseException e) {
+            return -1;
+        }
     }
 
 
+
 // ************************************************************************************************************************************    
+
     public static void main(String[] args) {
-        MonthlyPeriod RevizCheck = new RevizCheck();
+        RevizCheck RevizCheck = new RevizCheck();
 
-        String startDate1 = "2020-01-01";
-        String endDate1 = "2023-06-15";
-        System.out.println("Period: " + MonthlyPeriod.calculatePeriod(startDate1, endDate1));
+        // Test case 1
+        String date1 = "2000-01-01";
+        System.out.println("Age: " + RevizCheck.calculateAge(date1));
 
-        String startDate2 = "2015-05-20";
-        String endDate2 = "2015-10-19";
-        System.out.println("Period: " + MonthlyPeriod.calculatePeriod(startDate2, endDate2));
+        // Test case 2
+        String date2 = "1990-06-15";
+        System.out.println("Age: " + RevizCheck.calculateAge(date2));
 
-        String startDate3 = "2015-05-20";
-        String endDate3 = "2015-10-19";
-        System.out.println("Period: " + MonthlyPeriod.calculatePeriod(startDate3, endDate3));
-
-        String startDate4 = "2018-12-25";
-        String endDate4 = "2021-12-25";
-        System.out.println("Period: " + MonthlyPeriod.calculatePeriod(startDate4, endDate4));
-
-        String startDate5 = "2018-10-25";
-        String endDate5 = "2019-11-30";
-        System.out.println("Period: " + MonthlyPeriod.calculatePeriod(startDate5, endDate5));
+        // Test case 3
+        String date3 = "2010-12-25";
+        System.out.println("Age: " + RevizCheck.calculateAge(date3));
     }
 }
