@@ -7,7 +7,9 @@ public class DayOfWeekFinder {
     public String findNextDayOfWeek(String startDate, String dayOfWeek) {
         try {
             // Parse the input date
-            LocalDate date = LocalDate.parse(startDate, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+            // LocalDate date = LocalDate.parse(startDate, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+            DateTimeFormatter formatter =  DateTimeFormatter.ofPattern("yyyy-MM-dd");
+            LocalDate date = LocalDate.parse(startDate, formatter);
             
             // Convert the input day of the week string to a DayOfWeek enum
             DayOfWeek targetDay;
