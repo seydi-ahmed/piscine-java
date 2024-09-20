@@ -1,75 +1,40 @@
-import java.util.Stack;
+import java.util.Arrays;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class RevizCheck {
-    public boolean validateHTML(String html) {
-        String[] validTags = {"html", "body", "div", "p", "b", "i", "h1", "h2"};
-        Stack<String> tagStack = new Stack<>();
+    public String hideSensitiveData(String configFile, List<String> sensitiveKeys) {
 
-        int i = 0;
-        while (i < html.length()){
-            
-            if (html.charAt(i) == '<'){
+        for (String key : sensitiveKeys){
 
-                int j = html.indexOf('>', i);
-                if (j == -1){
-                    return false;
-                }
+            String regex = key + "=([^\n]*)";
+            Pattern pattern = Pattern.compile(regex);
+            Matcher matcher = pattern.matcher(configFile);
 
-                String tag = html.substring(i+1, j).trim();
-
-                if (tag.startsWith("/")){
-                    String closingTag = tag.substring(1);
-
-                    if (tagStack.isEmpty() || !tagStack.peek().equals(closingTag)){
-                        return false;
-                    }
-
-                    tagStack.pop();
-                } else {
-
-                    boolean isValidTag = false;
-                    for (String validTag : validTags){
-                        if (validTag.equals(tag)){
-                            isValidTag = true;
-                            break;
-                        }
-                    }
-
-                    if (!isValidTag){
-                        return false;
-                    }
-                    tagStack.push(tag);
-                }
-
-                i = j;
-            }
-
-
-            i++;
+            configFile = matcher.replaceAll(matchResult -> key + "=" + "*".repeat(matchResult.group(1).length()));
         }
-        return tagStack.isEmpty();
+
+        return configFile;
+        
     }
 
 
-// ************************************************************************************************************************************    
+// **********************************************************************************************************************************
 
     public static void main(String[] args) {
-        RevizCheck validator = new RevizCheck();
+        RevizCheck protector = new RevizCheck();
 
-        // Test case 1: Valid HTML
-        String html1 = "<html><body><h1>Hello, World!</h1></body></html>";
-        System.out.println("Is HTML valid? " + validator.validateHTML(html1)); // Expected output: true
+        String configFile1 = "username=admin\npassword=secret\nhost=localhost\n";
+        List<String> sensitiveKeys1 = Arrays.asList("password");
+        System.out.println("Protected Config 1:\n" + protector.hideSensitiveData(configFile1, sensitiveKeys1));
 
-        // Test case 2: Invalid HTML (missing closing tag)
-        String html2 = "<html><body><h1>Hello, World!</body></html>";
-        System.out.println("Is HTML valid? " + validator.validateHTML(html2)); // Expected output: false
+        String configFile2 = "apiKey=12345\napiSecret=abcdef\nendpoint=https://api.example.com\n";
+        List<String> sensitiveKeys2 = Arrays.asList("apiKey", "apiSecret");
+        System.out.println("Protected Config 2:\n" + protector.hideSensitiveData(configFile2, sensitiveKeys2));
 
-        // Test case 3: Invalid HTML (incorrect nesting)
-        String html3 = "<html><body><h1><div>Hello, World!</h1></div></body></html>";
-        System.out.println("Is HTML valid? " + validator.validateHTML(html3)); // Expected output: false
-
-        // Test case 4: Valid HTML with multiple tags
-        String html4 = "<html><body><div><p>This is a <b>bold</b> word and this is <i>italic</i>.</p></div></body></html>";
-        System.out.println("Is HTML valid? " + validator.validateHTML(html4)); // Expected output: true
+        String configFile3 = "username=user\npassword=pass\n";
+        List<String> sensitiveKeys3 = Arrays.asList("username", "password");
+        System.out.println("Protected Config 3:\n" + protector.hideSensitiveData(configFile3, sensitiveKeys3));
     }
 }
