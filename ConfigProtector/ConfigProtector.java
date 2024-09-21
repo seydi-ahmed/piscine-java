@@ -38,19 +38,3 @@ public class ConfigProtector {
         System.out.println("Protected Config 3:\n" + protector.hideSensitiveData(configFile3, sensitiveKeys3));
     }
 }
-
-
-
-// Protected Config 1:
-// username=admin
-// password=******
-// host=localhost
-
-// Protected Config 2:
-// apiKey=*****
-// apiSecret=******
-// endpoint=https://api.example.com
-
-// Protected Config 3:
-// username=****
-// password=****
