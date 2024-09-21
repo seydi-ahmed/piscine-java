@@ -1,24 +1,21 @@
 public class PerfectNumber {
 
     public boolean isPerfectNumber(int number) {
-        // Check for edge case where number is less than 2
         if (number <= 1) {
             return false;
         }
 
-        int sum = 1; // Start with 1 since 1 is a proper divisor of all numbers
+        int sum = 1;
 
-        // Iterate from 2 to sqrt(number)
         for (int i = 2; i <= Math.sqrt(number); i++) {
-            if (number % i == 0) { // If i is a divisor
-                sum += i; // Add divisor i
+            if (number % i == 0) {
+                sum += i;
                 if (i != number / i) {
-                    sum += number / i; // Add the complement divisor if it's different
+                    sum += number / i;
                 }
             }
         }
 
-        // Check if the sum of proper divisors equals the number
         return sum == number;
     }
 
