@@ -8,6 +8,9 @@
 https://github.com/01-edu/public/tree/master/subjects/java/piscine
 
 *****************************************************
+
+## Utilités
+ceci est un ensemble d'exercices qui permettent de justifier ta maitrise du langage java.
 *****************************************************
 *****************************************************
 ## installation
