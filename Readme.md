@@ -3,6 +3,13 @@
 # Piscine Java
 
 *****************************************************
+
+## Lien vers les exercices:
+https://github.com/01-edu/public/tree/master/subjects/java/piscine
+
+*****************************************************
+*****************************************************
+*****************************************************
 ## installation
 
 1) download "jdk-17.0.11_linux-x64_bin.tar.gz" ==> https://download.oracle.com/java/17/archive/jdk-17.0.11_linux-x64_bin.tar.gz
